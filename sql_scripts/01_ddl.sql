@@ -1,4 +1,4 @@
--- Измерение: Клиенты
+-- Измерения
 CREATE TABLE dim_customer (
     customer_id INT PRIMARY KEY,
     first_name VARCHAR(100),
@@ -9,7 +9,6 @@ CREATE TABLE dim_customer (
     postal_code VARCHAR(20)
 );
 
--- Измерение: Питомцы
 CREATE TABLE dim_pet (
     pet_id SERIAL PRIMARY KEY,
     customer_id INT REFERENCES dim_customer(customer_id),
@@ -18,7 +17,6 @@ CREATE TABLE dim_pet (
     pet_breed VARCHAR(100)
 );
 
--- Измерение: Продавцы
 CREATE TABLE dim_seller (
     seller_id INT PRIMARY KEY,
     first_name VARCHAR(100),
@@ -28,7 +26,6 @@ CREATE TABLE dim_seller (
     postal_code VARCHAR(20)
 );
 
--- Измерение: Товары
 CREATE TABLE dim_product (
     product_id INT PRIMARY KEY,
     name VARCHAR(100),
@@ -47,7 +44,6 @@ CREATE TABLE dim_product (
     supplier_id INT
 );
 
--- Измерение: Магазины
 CREATE TABLE dim_store (
     store_id SERIAL PRIMARY KEY,
     name VARCHAR(100),
@@ -59,7 +55,6 @@ CREATE TABLE dim_store (
     email VARCHAR(100)
 );
 
--- Измерение: Поставщики
 CREATE TABLE dim_supplier (
     supplier_id SERIAL PRIMARY KEY,
     name VARCHAR(100),
@@ -71,7 +66,6 @@ CREATE TABLE dim_supplier (
     country VARCHAR(100)
 );
 
--- Измерение: Дата
 CREATE TABLE dim_date (
     date_id DATE PRIMARY KEY,
     day INT,
@@ -80,7 +74,7 @@ CREATE TABLE dim_date (
     quarter INT
 );
 
--- Факт: Продажи
+-- Факт - Продажи
 CREATE TABLE fact_sales (
     sale_id SERIAL PRIMARY KEY,
     date_id DATE REFERENCES dim_date(date_id),
