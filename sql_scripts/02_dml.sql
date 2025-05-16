@@ -1,4 +1,3 @@
--- 1. Заполнение dim_customer (пропуск дубликатов)
 INSERT INTO dim_customer (customer_id, first_name, last_name, age, email, country, postal_code)
 SELECT DISTINCT
     sale_customer_id,
@@ -12,7 +11,6 @@ FROM raw_mock_data
 WHERE sale_customer_id IS NOT NULL
 ON CONFLICT (customer_id) DO NOTHING;
 
--- 2. Заполнение dim_pet (пропуск дубликатов)
 INSERT INTO dim_pet (customer_id, pet_type, pet_name, pet_breed)
 SELECT DISTINCT
     sale_customer_id,
@@ -23,7 +21,6 @@ FROM raw_mock_data
 WHERE customer_pet_type IS NOT NULL
 ON CONFLICT (pet_id) DO NOTHING;
 
--- 3. Заполнение dim_seller (пропуск дубликатов)
 INSERT INTO dim_seller (seller_id, first_name, last_name, email, country, postal_code)
 SELECT DISTINCT
     sale_seller_id,
@@ -36,7 +33,6 @@ FROM raw_mock_data
 WHERE sale_seller_id IS NOT NULL
 ON CONFLICT (seller_id) DO NOTHING;
 
--- 4. Заполнение dim_supplier (пропуск дубликатов)
 INSERT INTO dim_supplier (name, contact, email, phone, address, city, country)
 SELECT DISTINCT
     supplier_name,
@@ -50,7 +46,6 @@ FROM raw_mock_data
 WHERE supplier_name IS NOT NULL
 ON CONFLICT (supplier_id) DO NOTHING;
 
--- 5. Заполнение dim_store (пропуск дубликатов)
 INSERT INTO dim_store (name, location, city, state, country, phone, email)
 SELECT DISTINCT
     store_name,
@@ -64,7 +59,6 @@ FROM raw_mock_data
 WHERE store_name IS NOT NULL
 ON CONFLICT (store_id) DO NOTHING;
 
--- 6. Заполнение dim_product (пропуск дубликатов)
 INSERT INTO dim_product (
     product_id, name, category, price, weight, color, size, brand, material,
     description, rating, reviews, release_date, expiry_date, supplier_id
@@ -89,7 +83,6 @@ FROM raw_mock_data
 WHERE sale_product_id IS NOT NULL
 ON CONFLICT (product_id) DO NOTHING;
 
--- 7. Заполнение dim_date (пропуск дубликатов)
 INSERT INTO dim_date (date_id, day, month, year, quarter)
 SELECT DISTINCT
     sale_date,
@@ -101,7 +94,6 @@ FROM raw_mock_data
 WHERE sale_date IS NOT NULL
 ON CONFLICT (date_id) DO NOTHING;
 
--- 8. Заполнение fact_sales (без конфликтов, так как sale_id SERIAL)
 INSERT INTO fact_sales (
     date_id, customer_id, seller_id, product_id, store_id, quantity, total_price
 )
