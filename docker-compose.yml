@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: snowflake_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: sales_dwh
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql_scripts:/docker-entrypoint-initdb.d  # Монтируем папку с SQL-скриптами
+      - ./mock_data:/mock_data  # Монтируем CSV-файлы
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d sales_dwh"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
